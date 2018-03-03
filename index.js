@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // app.use(express.static(__dirname + '/build'));
 
-app.use(express.static(__dirname + '/build'))
+app.use(express.static('./build'))
 
 let PlayerRoutes = require('./routes/PlayerRoutes');
 app.use(apiBase + 'players', PlayerRoutes);
