@@ -46,4 +46,28 @@ export default class DataService {
         })
     }
 
+    getGames() {
+        return new Promise((resolve, reject) => {
+            axios.get(this.ApiRoutes.Games)
+            .then(function (response) {
+                resolve(response.data);
+            })
+            .catch(function (error) {
+                reject(error);
+            });
+        })
+    }
+
+    createGame(game) {
+        return new Promise((resolve, reject) => {
+            axios.post(this.ApiRoutes.Games, game)
+            .then(function (response) {
+                resolve(response.data);
+            })
+            .catch(function (error) {
+                reject(error);
+            });
+        })
+    }
+
 }

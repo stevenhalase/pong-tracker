@@ -5,6 +5,7 @@ import { StyleSheet, css } from 'aphrodite';
 
 import Leaderboard from './Leaderboard';
 import Players from './Players';
+import Games from './Games';
 
 import logo from'../assets/media/logo.png';
 
@@ -38,6 +39,7 @@ class Dashboard extends Component {
     this.menuSelect = this.menuSelect.bind(this);
     this.handleUserCreate = this.handleUserCreate.bind(this);
     this.handleUserDelete = this.handleUserDelete.bind(this);
+    this.handleGameCreate = this.handleGameCreate.bind(this);
   }
   toggle = () => {
     this.setState({
@@ -68,6 +70,9 @@ class Dashboard extends Component {
   }
   handleUserDelete = (e) => {
     this.props.handleUserDelete(e);
+  }
+  handleGameCreate = (e) => {
+    this.props.handleGameCreate(e);
   }
   render() {
     return (
@@ -116,6 +121,12 @@ class Dashboard extends Component {
                   handleUserCreate={this.handleUserCreate} 
                   handleUserDelete={this.handleUserDelete}
                   players={this.props.players}/>
+              </div>
+              <div className={this.state.selectedComponent === Components.Games ? css(styles.active) : css(styles.inactive)}>
+                <Games 
+                  handleGameCreate={this.handleGameCreate}
+                  players={this.props.players}
+                  games={this.props.games}/>
               </div>
             </Content>
           </Layout>

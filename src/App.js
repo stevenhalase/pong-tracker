@@ -16,6 +16,7 @@ class App extends Component {
       Games: []
     }
     this.handleUserCreate = this.handleUserCreate.bind(this);
+    this.handleGameCreate = this.handleGameCreate.bind(this);
     this.handleUserDelete = this.handleUserDelete.bind(this);
   }
   componentDidMount() {
@@ -25,6 +26,12 @@ class App extends Component {
           Players: players 
         });
       })
+    this.state.DataService.getGames()
+    .then(games => {
+      this.setState({ 
+        Games: games 
+      });
+    })
   }
   handleUserCreate = (e) => {
     let _this = this;
@@ -63,13 +70,33 @@ class App extends Component {
         message.error('Error deleting player!');
       })
   }
+  handleGameCreate = (e) => {
+    let _this = this;
+    const hide = message.loading('Creating game..', 0);
+    this.state.DataService.createGame(e)
+      .then(game => {
+        let newGamesList = _this.state.Games;
+        newGamesList.push(game);
+        _this.setState({
+          Games: newGamesList
+        })
+        hide();
+        message.success('Game created successfully!');
+      })
+      .catch(error => {
+        hide();
+        message.error('Error creating game!');
+      })
+  }
   render() {
     return (
       <div className="App">
         <Dashboard 
           handleUserCreate={this.handleUserCreate}
           handleUserDelete={this.handleUserDelete}
-          players={this.state.Players}/>
+          handleGameCreate={this.handleGameCreate}
+          players={this.state.Players}
+          games={this.state.Games}/>
       </div>
     );
   }
