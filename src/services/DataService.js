@@ -3,7 +3,7 @@ import axios from 'axios';
 export default class DataService {
     constructor() {
         // this.ApiBase = 'http://localhost:3090/api/v1/';
-        this.ApiBase = '/api/v1/';
+        this.ApiBase = 'https://pong-tracker-api-dev.herokuapp.com/api/v1/';
         this.ApiRoutes = {
             Players: this.ApiBase + 'players/',
             Games: this.ApiBase + 'games/'
