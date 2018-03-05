@@ -10,7 +10,17 @@ class Leaderboard extends Component {
     super(props);
     this.state = {
       playerStats: [],
-      dataArray: [['Name', 'Wins', 'Losses', 'Ratio']]
+      dataArray: [['Name', 'Wins', 'Losses', 'Ratio']],
+      chartOptions: {
+        series: {
+          0: {targetAxisIndex: 1},
+          1: {targetAxisIndex: 3},
+        },
+        vAxes: {
+          0: {title: 'Wins/Losses'},
+          1: {title: 'Ratio'}
+        }
+      }
     }
     this.calculateStats = this.calculateStats.bind(this);
     this.createDataArray = this.createDataArray.bind(this);
@@ -50,7 +60,7 @@ class Leaderboard extends Component {
           <Chart
             chartType="ColumnChart"
             data={this.state.dataArray}
-            options={{}}
+            options={{this.state.chartOptions}}
             graph_id="PlayerChart"
             width="100%"
             height="400px"
