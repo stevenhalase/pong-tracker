@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-import { Modal, Button, Input, InputNumber, Icon, DatePicker, AutoComplete, Row, Col  } from 'antd';
+import { Modal, Button, Input, InputNumber, Icon, DatePicker, AutoComplete, Row, Col, message  } from 'antd';
+import moment from 'moment'
 import { StyleSheet, css } from 'aphrodite';
 
 class GameEdit extends Component {
@@ -10,9 +11,9 @@ class GameEdit extends Component {
       visible: false,
       newGame: {
         date: {},
-        playerone: {},
+        playerone: '',
         playeronescore: 21,
-        playertwo: {},
+        playertwo: '',
         playertwoscore: 21
       },
       playerOneSource: this.props.players,
@@ -29,6 +30,7 @@ class GameEdit extends Component {
     this.handlePlayerOneSearch = this.handlePlayerOneSearch.bind(this);
     this.handlePlayerTwoSearch = this.handlePlayerTwoSearch.bind(this);
     this.filterPlayers = this.filterPlayers.bind(this);
+    this.isValidPlayer = this.isValidPlayer.bind(this);
   }
   showModal = () => {
     this.setState({
@@ -36,20 +38,25 @@ class GameEdit extends Component {
     });
   }
   handleOk = (e) => {
-    this.replacePlayers(this.state.newGame);
-    this.props.handleGameCreate(this.state.newGame);
-    this.setState({
-      visible: false,
-      newGame: {
-        date: {},
-        playerone: {},
-        playeronescore: 21,
-        playertwo: {},
-        playertwoscore: 21
-      },
-      playerOneSource: this.props.players,
-      playerTwoSource: this.props.players
-    });
+    if (this.isValidPlayer(this.state.newGame.playerone) &&
+        this.isValidPlayer(this.state.newGame.playertwo)) {
+          this.replacePlayers(this.state.newGame);
+          this.props.handleGameCreate(this.state.newGame);
+          this.setState({
+            visible: false,
+            newGame: {
+              date: {},
+              playerone: {},
+              playeronescore: 21,
+              playertwo: {},
+              playertwoscore: 21
+            },
+            playerOneSource: this.props.players,
+            playerTwoSource: this.props.players
+          });
+        } else {
+          message.warning('Players not valid.');
+        }
   }
   replacePlayers = (game) => {
     game.playerone = this.props.players.find(el => {
@@ -61,6 +68,12 @@ class GameEdit extends Component {
     this.setState({
       newGame: game
     })
+  }
+  isValidPlayer(playerName) {
+    let player = this.props.players.find(el => {
+      return el.Name.toLowerCase() == playerName.toLowerCase();
+    })
+    return typeof player !== 'undefined';
   }
   handleCancel = (e) => {
     console.log(e);
@@ -138,12 +151,13 @@ class GameEdit extends Component {
         >
           <Row className={css(styles.row)}>
             <Col span={24}>
-              <DatePicker className={css(styles.fullWidth)} onChange={this.onChangeDate} />
+              <DatePicker className={css(styles.fullWidth)} defaultValue={moment(new Date())} showTime onChange={this.onChangeDate} />
             </Col>
           </Row>
           <Row className={css(styles.row)}>
             <Col span={17}>
               <AutoComplete
+                id="playerOneInput"
                 className={css(styles.fullWidth)}
                 dataSource={this.state.playerOneSource}
                 style={{ width: 200 }}

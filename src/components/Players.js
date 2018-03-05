@@ -50,7 +50,7 @@ class Players extends Component {
               <Button 
                 onClick={this.handleUserDelete}
                 className={this.state.selectedRows.length === 1 ? css(styles.active) : css(styles.inactive)}
-                type="danger" icon="user-delete" onClick={this.handleUserDelete} >Delete Player</Button>
+                type="danger" icon="user-delete">Delete Player</Button>
             </div>
             <div className={css(styles.playerEdit)}>
               <Button 

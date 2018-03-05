@@ -70,4 +70,16 @@ export default class DataService {
         })
     }
 
+    deleteGame(id) {
+        return new Promise((resolve, reject) => {
+            axios.delete(this.ApiRoutes.Games + id)
+            .then(function (response) {
+                resolve(response.data);
+            })
+            .catch(function (error) {
+                reject(error);
+            });
+        })
+    }
+
 }

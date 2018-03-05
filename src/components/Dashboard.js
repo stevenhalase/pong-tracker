@@ -74,6 +74,9 @@ class Dashboard extends Component {
   handleGameCreate = (e) => {
     this.props.handleGameCreate(e);
   }
+  handleGameDelete = (e) => {
+    this.props.handleGameDelete(e);
+  }
   render() {
     return (
       <div className="Dashboard">
@@ -114,7 +117,7 @@ class Dashboard extends Component {
             </Header>
             <Content className={css(styles.content)}>
               <div className={this.state.selectedComponent === Components.Leaderboard ? css(styles.active) : css(styles.inactive)}>
-                <Leaderboard players={this.props.players}/>
+                <Leaderboard players={this.props.players} games={this.props.games}/>
               </div>
               <div className={this.state.selectedComponent === Components.Players ? css(styles.active) : css(styles.inactive)}>
                 <Players 
@@ -125,6 +128,7 @@ class Dashboard extends Component {
               <div className={this.state.selectedComponent === Components.Games ? css(styles.active) : css(styles.inactive)}>
                 <Games 
                   handleGameCreate={this.handleGameCreate}
+                  handleGameDelete={this.handleGameDelete}
                   players={this.props.players}
                   games={this.props.games}/>
               </div>

@@ -11,6 +11,7 @@ class Games extends Component {
       selectedRows: []
     };
     this.handleGameCreate = this.handleGameCreate.bind(this);
+    this.handleGameDelete = this.handleGameDelete.bind(this);
     this.columns = [{
       title: 'Date',
       dataIndex: 'Date',
@@ -54,6 +55,9 @@ class Games extends Component {
   handleGameCreate = (e) => {
     this.props.handleGameCreate(e);
   }
+  handleGameDelete = (e) => {
+    this.props.handleGameDelete(this.state.selectedRows[0]);
+  }
   render() {
     return (
       <div className="Games">
@@ -63,6 +67,12 @@ class Games extends Component {
             <h1 className={css(styles.title)}>Games</h1>
             <div className={css(styles.gameEdit)}>
               <GameEdit handleGameCreate={this.handleGameCreate} players={this.props.players}/>
+            </div>
+            <div className={css(styles.gameEdit)}>
+              <Button 
+                onClick={this.handleGameDelete}
+                className={this.state.selectedRows.length === 1 ? css(styles.active) : css(styles.inactive)}
+                type="danger" icon="minus-circle-o">Delete Game</Button>
             </div>
           </Col>
         </Row>
