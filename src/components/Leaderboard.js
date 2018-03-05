@@ -60,7 +60,7 @@ class Leaderboard extends Component {
           <Chart
             chartType="ColumnChart"
             data={this.state.dataArray}
-            options={{this.state.chartOptions}}
+            options={this.state.chartOptions}
             graph_id="PlayerChart"
             width="100%"
             height="400px"
